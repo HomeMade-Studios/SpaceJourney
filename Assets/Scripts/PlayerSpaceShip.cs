@@ -2,7 +2,7 @@
 using System.Collections;
 using CnControls;
 
-public class SpaceShip : MonoBehaviour
+public class PlayerSpaceShip : MonoBehaviour
 {
 
 	float acceleration, maxSpeed;
@@ -58,12 +58,14 @@ public class SpaceShip : MonoBehaviour
 
 	void Move()
 	{
-		float x, y;
+		float x, y, relativeMaxSpeed;
 
 		x = CnInputManager.GetAxis("HorizontalMovement");
 		y = CnInputManager.GetAxis("VerticalMovement");
 
-		if (phys.velocity.magnitude < maxSpeed)
+		relativeMaxSpeed = new Vector2(x, y).magnitude * maxSpeed;
+
+		if (phys.velocity.magnitude < relativeMaxSpeed)
 		{
 			phys.AddForce(new Vector2(x * acceleration, y * acceleration), ForceMode2D.Force);
 		}
